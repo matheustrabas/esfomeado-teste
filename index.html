@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<!-- INDEX.HTML: a estrutura da página. Aqui só ficam as "caixas"; o conteúdo é montado pelo script.js. Codificação de caracteres (acentos). -->
+<meta charset="utf-8">
+<!-- Faz a página se ajustar à tela do celular. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Título que aparece na aba do navegador. -->
+<title>Esfomeado – Bateu a fome? Chega rapidinho</title>
+<!-- Ícone da aba. -->
+<link rel="icon" type="image/png" href="img/favicon.png">
+<!-- Fonte Bricolage Grotesque, do Google Fonts. -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- Lê o tema salvo (claro ou escuro) antes de a página aparecer, para não piscar. -->
+<script>try{var t=JSON.parse(localStorage.getItem("esf_theme"));t&&(document.documentElement.dataset.theme=t)}catch(e){}</script>
+<!-- Liga o arquivo de estilos (style.css). -->
+<link rel="stylesheet" href="style.css"></head><body>
+<!-- CABEÇALHO: logo, endereço, busca, botões e carrinho. -->
+<header>
+<!-- Logo: clicar volta para o início (go). -->
+<button class="logo" onclick="go()" aria-label="Esfomeado, início"><img src="img/logo-pequena.jpg" alt="">esfomeado</button>
+<!-- Endereço de entrega: clicar abre o painel de endereço (addrSheet). -->
+<button class="loc" onclick="addrSheet()"><small>Entregar em</small><b><span id="ad"></span> ▾</b></button>
+<!-- Busca de restaurante ou prato: a cada letra chama srch(). -->
+<div class="srch"><span>🔍</span><input id="si" aria-label="Buscar restaurante ou prato" placeholder="Buscar restaurante ou prato" oninput="srch(this.value)"></div>
+<!-- Abre o histórico de pedidos. -->
+<button class="bo mp" onclick="ordersSheet()">Meus pedidos</button>
+<!-- Abre o painel de login. -->
+<button class="bo" onclick="login()">Entrar</button>
+<!-- Alterna entre tema claro e escuro. -->
+<button class="bo" id="th" onclick="setTheme()" aria-label="Alternar tema">🌙</button>
+<!-- Abre a sacola; #cc mostra a quantidade de itens. -->
+<button class="cartbtn" onclick="openCart()" aria-label="Abrir sacola">🛒 <span id="cc">0</span></button></header>
+<!-- ÁREA PRINCIPAL: #sb = barra lateral (categorias e filtros); #app = conteúdo (home ou cardápio), preenchido pelo script.js. -->
+<div class="wrap" id="wrap"><aside class="side" id="sb"></aside><main id="app"></main></div>
+<!-- RODAPÉ com a logo e o aviso de que é um protótipo. -->
+<footer><img id="lf" src="img/logo.jpg" alt="Logo do Esfomeado"><p>Esfomeado · protótipo de aplicativo de delivery. Restaurantes e preços fictícios.</p></footer>
+<!-- BARRA FIXA DA SACOLA: aparece quando há itens e abre a sacola ao clicar. -->
+<div id="bar" class="bar" hidden role="button" tabindex="0" onclick="openCart()" onkeydown="if(event.key==='Enter')openCart()"></div>
+<!-- PAINEL DESLIZANTE: janela usada para sacola, login, endereço, rastreio e ajuda (clicar fora fecha). -->
+<div id="ov" class="ov" hidden onclick="if(event.target===this)closeCart()"><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Detalhes"></div></div>
+<!-- AVISO RÁPIDO (toast) para mensagens curtas, como "Adicionado à sacola". -->
+<div id="toast" role="status" aria-live="polite"></div>
+<!-- Carrega a lógica do app (script.js). Fica no fim para o HTML já existir quando o script rodar. -->
+<script src="script.js"></script></body></html>

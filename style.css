@@ -1,0 +1,113 @@
+
+/* STYLE.CSS: a aparência do Esfomeado. VARIÁVEIS DE COR do tema claro (fundo, texto, cor da marca, etc.) e espaço das áreas seguras do celular. */
+:root{--bg:#fffffb;--card:#fff;--ink:#2a1740;--mute:#6f6286;--line:#f1ebdb;--brand:#ffc933;--on:#2a1740;--ok:#17803d;--tom:#d9301b;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* MODO ESCURO automático: usado quando o sistema está no escuro e o usuário não escolheu o claro. */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0612;--card:#140d20;--ink:#fdf3dc;--mute:#a99cc2;--line:#2a1d3f;--tom:#ff7a66;--ok:#5fd68a;color-scheme:dark}}
+/* MODO ESCURO manual: ativado pelo botão de tema (atributo data-theme=dark). */
+:root[data-theme="dark"]{--bg:#0a0612;--card:#140d20;--ink:#fdf3dc;--mute:#a99cc2;--line:#2a1d3f;--tom:#ff7a66;--ok:#5fd68a;color-scheme:dark}
+/* RESET E BASE: box-sizing, rolagem e estilo geral da página (fonte, cor, fundo). */
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.35}
+/* Faixa fixa no topo que cobre a área do notch/barra de status do celular. */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--card)}
+/* Botões e campos herdam a fonte da página. */
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+/* CABEÇALHO fixo no topo (logo, endereço, busca e botões). */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
+/* Botão da logo (formato de pílula amarela). */
+.logo{display:flex;align-items:center;gap:8px;background:var(--brand);color:var(--on);font-weight:800;font-size:22px;letter-spacing:-.03em;padding:3px 14px 3px 4px;border-radius:999px;border:0}.logo img{width:34px;height:34px;border-radius:50%;border:2px solid var(--on);background:#fcf9f2}
+/* Botão com o endereço de entrega. */
+.loc{display:flex;flex-direction:column;align-items:flex-start;background:none;border:0;padding:0;text-align:left}.loc small{color:var(--mute);font-size:12px}.loc b{font-size:14px;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Barra de busca. */
+.srch{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:0 14px}.srch:focus-within{border-color:var(--brand)}.srch input{flex:1;min-width:0;border:0;background:none;outline:none;padding:10px 0;font-size:15px}
+/* Botões do topo: contorno (.bo) e carrinho (.cartbtn). */
+.bo,.cartbtn{border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px}.bo{background:none;border:1.5px solid var(--line)}.cartbtn{background:var(--ink);color:var(--bg);border:0}
+/* Ajustes do cabeçalho para telas pequenas (busca ocupa a linha toda). */
+@media (max-width:720px){.bo{display:none}.srch{order:9;flex:1 1 100%}.loc{flex:1;min-width:0}.loc b{max-width:100%}.cartbtn{margin-left:auto}}
+/* LAYOUT PRINCIPAL: duas colunas (lateral + conteúdo); .full vira uma coluna ao abrir um restaurante. */
+.wrap{display:grid;grid-template-columns:230px 1fr;gap:20px;max-width:1120px;margin:0 auto;padding:18px 16px 24px}.wrap>*{min-width:0}.wrap.full{grid-template-columns:1fr;max-width:760px}.wrap.full .side{display:none}
+/* BARRA LATERAL com categorias e filtros (fica fixa ao rolar). */
+.side{position:sticky;top:84px;align-self:start;display:flex;flex-direction:column;gap:14px}
+/* Caixas da lateral. */
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}.box h3{margin:0 0 6px 8px;font-size:13px;color:var(--mute);font-weight:600}
+/* Botões da lista da lateral (.on = selecionado). */
+.si{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;border-radius:10px;padding:9px 10px;text-align:left;font-weight:600;font-size:14px}.si.on{background:var(--brand);color:var(--on)}
+/* Em tablets e celulares a lateral some e o conteúdo usa a tela toda. */
+@media (max-width:900px){.wrap{grid-template-columns:1fr}.side{display:none}}
+/* Chips de categoria e filtro em linha rolável (só aparecem no celular). */
+.pills,.fl{display:flex;gap:8px;overflow-x:auto;margin-top:12px}@media (min-width:901px){.pills,.fl{display:none}}
+/* Chip (botão arredondado) de categoria ou filtro. */
+.chip{flex:none;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px}.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* BANNER (hero) da tela inicial, com imagem de fundo e degradê. */
+.hero{position:relative;overflow:hidden;border-radius:22px;background:#2a1740;color:#fff;padding:30px 28px;min-height:200px;display:flex;align-items:center}.hero::before{content:"";position:absolute;inset:0;background-repeat:no-repeat;background-position:right center;background-size:auto 100%}.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#2a1740 35%,rgba(42,23,64,.6) 65%,rgba(42,23,64,.15))}.hc{position:relative;z-index:1;max-width:460px}.pill{display:inline-block;background:var(--brand);color:#2a1740;font-size:12px;font-weight:700;border-radius:999px;padding:4px 12px}.hero h1{margin:12px 0 6px;font-size:clamp(34px,6vw,54px);line-height:1;letter-spacing:-.035em;font-weight:800}.hero p{margin:0 0 14px;font-size:15px;opacity:.92}.hch{display:flex;gap:8px;flex-wrap:wrap}.hch button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600}
+/* Títulos de seção. */
+h2{font-size:22px;letter-spacing:-.02em;margin:20px 0 4px}.rc h2{margin:20px 0 12px}
+/* GRADE de cartões de restaurantes (se ajusta à largura da tela). */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:12px}
+/* Fotos: ocupam o espaço todo, sem repetir. */
+.pic,.ph,.cv{background-repeat:no-repeat;background-size:cover;background-position:center}
+/* CARTÃO DE RESTAURANTE na lista (com efeito ao passar o mouse). */
+.rcard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .15s}.rcard:hover{transform:translateY(-3px)}
+/* Foto do cartão e o selo (badge) sobre ela. */
+.pic{height:130px;position:relative}.bdg{position:absolute;top:8px;left:8px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;color:#fff;background:#2a1740}.bdg.g{background:#17803d}
+/* Corpo do cartão e a bolinha com a inicial do restaurante (.avt). */
+.cb{position:relative;padding:24px 14px 12px}.avt{position:absolute;top:-18px;left:12px;width:36px;height:36px;border-radius:50%;background:var(--card);border:2px solid var(--brand);display:grid;place-items:center;font-weight:800}
+/* Linhas de informação do cartão (nome e nota, tempo e frete). */
+.r1{display:flex;justify-content:space-between;align-items:center;gap:8px}.r2{margin-top:6px}.rt{background:#17803d;color:#fff;border-radius:6px;padding:1px 6px;font-size:12px;font-weight:700}
+/* Textos de apoio: cor suave (.mute), verde (.ok) e preço em vermelho (.price). */
+.mute{color:var(--mute);font-size:14px}.ok{color:var(--ok);font-weight:600}.price{color:var(--tom)}.grow{flex:1;min-width:0}
+/* PÁGINA DO RESTAURANTE: capa, botão voltar (.bk) e cartão de informações (.rc). */
+.cv{position:relative;height:170px;border-radius:20px;overflow:hidden;background-position:center 60%}.bk{position:absolute;top:12px;left:12px;width:38px;height:38px;border-radius:50%;border:0;background:var(--card);font-size:18px}.rc{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;margin-top:-26px;padding:0 18px 18px}.rc h1{margin:0;font-size:26px;letter-spacing:-.03em}
+/* Logo redonda com a inicial do restaurante. */
+.lg.big{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;font-size:36px;font-weight:800;background:var(--brand);color:var(--on);margin:-40px auto 8px;border:4px solid var(--card)}
+/* Linhas de informação e aviso de preço claro (.club). */
+.inf{padding:10px 0;border-top:1px solid var(--line);font-size:14px;margin-top:10px}.inf+.inf{margin-top:0}.club{background:color-mix(in srgb,var(--brand) 30%,var(--card));border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;margin-top:4px}
+/* Destaques do cardápio (rolagem horizontal) e foto do prato (.ph). */
+.hs{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}.dc{flex:none;width:150px;font-size:14px}
+/* Foto de um prato. */
+.ph{position:relative;width:100%;height:100px;border-radius:14px;margin-bottom:6px;background-color:color-mix(in srgb,var(--brand) 30%,var(--card))}.ph.sm{width:88px;height:88px;margin:0;flex:none}
+/* Botão "+" para adicionar o item à sacola. */
+.plus{position:absolute;right:6px;bottom:6px;width:34px;height:34px;border-radius:50%;border:0;background:var(--brand);color:var(--on);font-size:22px;font-weight:600;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+/* Linha de um item do cardápio. */
+.item{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:14px 0}
+/* RODAPÉ. */
+footer{max-width:980px;margin:0 auto;padding:8px 16px 110px;text-align:center;color:var(--mute);font-size:13px}footer img{width:120px;border-radius:20px;display:block;margin:0 auto 8px;background:#fcf9f2}
+/* BARRA FIXA DA SACOLA no rodapé da tela. */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--brand);color:var(--on);display:flex;justify-content:space-between;gap:12px;padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));font-weight:600;cursor:pointer}.bar[hidden],.ov[hidden]{display:none}
+/* PAINEL DESLIZANTE: fundo escuro (.ov) e a folha branca (.sheet) usada em sacola, login, endereço e rastreio. */
+.ov{position:fixed;inset:0;z-index:50;background:rgba(20,10,35,.6);display:flex;align-items:flex-end;justify-content:center}
+/* Folha do painel que sobe de baixo. */
+.sheet{background:var(--card);width:100%;max-width:520px;max-height:88%;overflow:auto;border-radius:22px 22px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px))}.sheet h2{margin-top:0}
+/* Linhas dentro do painel (item da sacola, subtotal, etc.). */
+.line,.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0}.line span:first-child{flex:1}
+/* Controle de quantidade (- e +). */
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg)}
+/* Linha do total. */
+.tot{font-weight:800;font-size:20px;border-top:1px solid var(--line);margin-top:6px;padding-top:12px}
+/* Campos de texto e select dos painéis (cupom, endereço, e-mail). */
+.cp{display:flex;gap:8px;margin:10px 0}.cp input,select{flex:1;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);width:100%}.cp button{border:0;border-radius:12px;background:var(--ink);color:var(--bg);padding:0 16px;font-weight:600}
+/* Botão de ação principal (.cta) e secundário (.sec). */
+.cta{width:100%;margin-top:14px;border:0;border-radius:14px;background:var(--brand);color:var(--on);padding:15px;font-weight:800;font-size:17px}
+/* Lista de etapas do rastreio do pedido. */
+.trk{list-style:none;padding:0;margin:16px 0}.trk li{padding:10px 0 10px 4px;color:var(--mute);opacity:.5;font-size:17px}.trk li.done{opacity:1;color:var(--ink);font-weight:600}
+/* AVISO RÁPIDO (toast) que aparece e some. */
+#toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;z-index:60;font-weight:600;white-space:nowrap}#toast.show{opacity:1;transform:translate(-50%,0)}
+/* Acessibilidade: tira animações de quem prefere menos movimento. */
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Acessibilidade: contorno visível ao navegar pelo teclado. */
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}@media (max-width:720px){.bo{display:inline-block}.bo,.cartbtn{padding:8px 10px}}
+/* Restaurante fechado (foto cinza) e item esgotado (.out). */
+.off{filter:grayscale(.85)}.out{position:absolute;right:6px;bottom:6px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:700;border-radius:999px;padding:5px 10px}.plus{width:44px;height:44px;right:4px;bottom:4px}.qty button{width:40px;height:40px}
+/* Avisos em vermelho (pedido mínimo, restaurante fechado). */
+.warn{color:var(--tom);font-weight:600;margin:8px 0}.club.warn{background:color-mix(in srgb,var(--tom) 15%,var(--card))}
+/* Barra de progresso do pedido mínimo. */
+.prog{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0}.prog i{display:block;height:100%;background:var(--brand)}.cta:disabled{opacity:.45;cursor:not-allowed}.cta.sec{background:none;border:1.5px solid var(--line);color:var(--ink);font-weight:600}
+/* Botões de gorjeta. */
+.tips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+/* Campo de observações do pedido. */
+textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);margin:8px 0;resize:vertical;font:inherit;color:inherit}.sm{font-size:12px}
+/* Estrelas da avaliação. */
+.stars button{background:none;border:0;font-size:30px;color:var(--brand);min-width:44px;min-height:44px}
+/* IMAGENS dos restaurantes (.i1 a .i8) e do banner (hero.jpg). */
+.i1{background-image:url(img/restaurante-1.jpg)}.i2{background-image:url(img/restaurante-2.jpg)}.i3{background-image:url(img/restaurante-3.jpg)}.i4{background-image:url(img/restaurante-4.jpg)}.i5{background-image:url(img/restaurante-5.jpg)}.i6{background-image:url(img/restaurante-6.jpg)}.i7{background-image:url(img/restaurante-7.jpg)}.i8{background-image:url(img/restaurante-8.jpg)}.hero::before{background-image:url(img/hero.jpg)}
+/* Transição suave de cores ao trocar de tema (classe .tt). */
+@media(prefers-reduced-motion:no-preference){.tt,.tt *,.tt *::before,.tt *::after{transition:background-color .45s ease,color .45s ease,border-color .45s ease,box-shadow .45s ease,fill .45s ease!important}}
